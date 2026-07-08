@@ -1,3 +1,64 @@
+# Saga Choreography Example
+
+A Spring Boot saga choreography demo with two services:
+
+- **order-service** (port `8081`) — creates orders and listens for payment events
+- **payment-service** (port `8082`) — processes payments via Kafka
+
+Infrastructure is provided by Docker Compose: MySQL, Zookeeper, Kafka, and both application services.
+
+## Prerequisites
+
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+
+## Clone the repository
+
+```bash
+git clone https://github.com/mathemkhungeni/choreography.git
+cd choreography
+```
+
+## Run with Docker Compose
+
+Build the service images and start all containers:
+
+```bash
+docker compose up --build
+```
+
+Run in the background:
+
+```bash
+docker compose up --build -d
+```
+
+The first startup may take a few minutes while Maven builds the images and MySQL/Kafka become healthy.
+
+### Services
+
+| Service          | URL / Port              |
+|------------------|-------------------------|
+| Order service    | http://localhost:8081   |
+| Payment service  | http://localhost:8082   |
+| MySQL            | localhost:3306          |
+| Kafka            | localhost:9092          |
+
+### Stop the stack
+
+```bash
+docker compose down
+```
+
+Remove volumes as well (clears MySQL data):
+
+```bash
+docker compose down -v
+```
+
+## API examples
+
 ## request
 ```bash
 curl --location --request POST 'http://localhost:8081/order/create' \
